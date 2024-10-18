@@ -1,0 +1,23 @@
+
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: postgres
+  password: root
+  host: localhost
+  port: 5432
+
+development:
+  <<: *default
+  database: comix_box_development
+
+test:
+  <<: *default
+  database: comix_box_test
+
+production:
+  <<: *default
+  database: comix_box_production
+  username: comix_box
+  password: <%= ENV['COMIX_BOX_DATABASE_PASSWORD'] %>

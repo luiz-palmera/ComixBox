@@ -1,0 +1,70 @@
+  [1m[35m (249.8ms)[0m  [1m[35mCREATE DATABASE "comix_box_development" ENCODING = 'unicode'[0m
+  [1m[35m (204.5ms)[0m  [1m[35mCREATE DATABASE "comix_box_test" ENCODING = 'unicode'[0m
+  [1m[35m (8.9ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[35m (7.3ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT pg_try_advisory_lock(6353109700755205395)[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.5ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "development"], ["created_at", "2024-10-18 17:17:49.439858"], ["updated_at", "2024-10-18 17:17:49.439858"]]
+  [1m[36mTRANSACTION (1.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT pg_advisory_unlock(6353109700755205395)[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_try_advisory_lock(6353109700755205395)[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateComics (20241018172711)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (6.9ms)[0m  [1m[35mCREATE TABLE "comics" ("id" bigserial primary key, "name" character varying, "synopsis" character varying, "image_url" character varying, "slug" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.7ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20241018172711"]]
+  [1m[36mTRANSACTION (2.1ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateReviews (20241018172904)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (7.7ms)[0m  [1m[35mCREATE TABLE "reviews" ("id" bigserial primary key, "description" character varying, "score" integer, "comic_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_4c7871d51d"
+FOREIGN KEY ("comic_id")
+  REFERENCES "comics" ("id")
+)[0m
+  [1m[35m (3.2ms)[0m  [1m[35mCREATE INDEX "index_reviews_on_comic_id" ON "reviews" ("comic_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.6ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20241018172904"]]
+  [1m[36mTRANSACTION (1.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.7ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT pg_advisory_unlock(6353109700755205395)[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mComic Create (0.8ms)[0m  [1m[32mINSERT INTO "comics" ("name", "synopsis", "image_url", "slug", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["name", "Guerras Secretas #8"], ["synopsis", "Os heróis invadem a base dos vilões em retaliação pela morte da Vespa. Eles derrotam os vilões e capturam \n        a maioria deles. Ao retornarem para sua base com uma Mulher-Hulk gravemente ferida, descobrem que a Vespa não está \n        morta, mas foi curada por Zsaji. Quando o Homem-Aranha percebe que o traje de Thor foi restaurado, ele é direcionado\n        a uma máquina que cospe uma pequena bola preta que rapidamente o cobre e se torna seu novo traje. Xavier entra em\n        contato com os heróis e lhes diz que Galactus começou a devorar o Mundo de Batalha."], ["image_url", "https://files1.comics.org//img/gcd/covers_by_id/989/w400/989165.jpg?4981458749147407200"], ["slug", "guerras-secretas-8"], ["created_at", "2024-10-18 18:10:24.844706"], ["updated_at", "2024-10-18 18:10:24.844706"]]
+  [1m[36mTRANSACTION (3.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mComic Create (0.4ms)[0m  [1m[32mINSERT INTO "comics" ("name", "synopsis", "image_url", "slug", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["name", "Batman: The Long Halloween"], ["synopsis", "“Batman: The Long Halloween” is a 13-issue comic series by Jeph Loeb and Tim Sale, published by DC Comics in 1996-1997. \n        It follows Batman, Harvey Dent, and James Gordon as they hunt a killer named Holiday. The series explores Gotham’s shift from organized\n        crime to supervillains and serves as an origin story for Two-Face. Its success led to sequels “Batman: Dark Victory” and \n        “Catwoman: When in Rome,” with a third sequel, “The Last Halloween,” starting in 2024."], ["image_url", "https://files1.comics.org//img/gcd/covers_by_id/1525/w400/1525977.jpg?-2503815629365525336"], ["slug", "batman-the-long-halloween"], ["created_at", "2024-10-18 18:10:25.109764"], ["updated_at", "2024-10-18 18:10:25.109764"]]
+  [1m[36mTRANSACTION (1.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mReview Create (0.7ms)[0m  [1m[32mINSERT INTO "reviews" ("description", "score", "comic_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["description", "Edição sensacional"], ["score", 5], ["comic_id", 1], ["created_at", "2024-10-18 18:10:25.238600"], ["updated_at", "2024-10-18 18:10:25.238600"]]
+  [1m[36mTRANSACTION (1.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mReview Create (0.4ms)[0m  [1m[32mINSERT INTO "reviews" ("description", "score", "comic_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["description", "Essa saga está indo de mal a pior"], ["score", 1], ["comic_id", 1], ["created_at", "2024-10-18 18:10:25.244307"], ["updated_at", "2024-10-18 18:10:25.244307"]]
+  [1m[36mTRANSACTION (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mComic Load (0.4ms)[0m  [1m[34mSELECT "comics".* FROM "comics" ORDER BY "comics"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mComic Load (0.3ms)[0m  [1m[34mSELECT "comics".* FROM "comics" ORDER BY "comics"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "reviews"."id" FROM "reviews" WHERE "reviews"."comic_id" = $1[0m  [["comic_id", 1]]
+Started GET "/api/v1/airlines.json" for 127.0.0.1 at 2024-10-18 17:25:42 -0300
+  [1m[35m (0.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  
+ActionController::RoutingError (No route matches [GET] "/api/v1/airlines.json"):
+  
+Started GET "/api/v1/comics.json" for 127.0.0.1 at 2024-10-18 17:26:01 -0300
+Processing by Api::V1::ComicsController#index as JSON
+  [1m[36mComic Load (0.8ms)[0m  [1m[34mSELECT "comics".* FROM "comics"[0m
+  ↳ app/controllers/api/v1/comics_controller.rb:7:in `index'
+  [1m[35m (0.9ms)[0m  [1m[34mSELECT "reviews"."id" FROM "reviews" WHERE "reviews"."comic_id" = $1[0m  [["comic_id", 1]]
+  ↳ app/controllers/api/v1/comics_controller.rb:7:in `index'
+  [1m[36mReview Load (0.8ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."comic_id" = $1[0m  [["comic_id", 1]]
+  ↳ app/controllers/api/v1/comics_controller.rb:7:in `index'
+  [1m[35m (0.9ms)[0m  [1m[34mSELECT "reviews"."id" FROM "reviews" WHERE "reviews"."comic_id" = $1[0m  [["comic_id", 2]]
+  ↳ app/controllers/api/v1/comics_controller.rb:7:in `index'
+  [1m[36mReview Load (0.8ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."comic_id" = $1[0m  [["comic_id", 2]]
+  ↳ app/controllers/api/v1/comics_controller.rb:7:in `index'
+Completed 200 OK in 380ms (Views: 0.2ms | ActiveRecord: 13.8ms | Allocations: 20041)
+
+
